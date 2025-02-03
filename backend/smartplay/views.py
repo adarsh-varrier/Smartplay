@@ -11,6 +11,8 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import logout
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 
 def test_view(request):
@@ -18,6 +20,7 @@ def test_view(request):
     return JsonResponse({'message': msg})
 
 class RegisterView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
@@ -26,6 +29,7 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -47,6 +51,18 @@ class LoginView(APIView):
 
         return Response({"message": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
+
     def post(self, request):
-        logout(request)
-        return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)        
+        logout(request)  # This logs the user out
+        return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK) 
+
+class UserDetailsView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
+
+    def get(self, request):
+        user = request.user  # Get the current logged-in user
+        return Response({
+            'username': user.username,
+            'email': user.email
+        })
