@@ -13,6 +13,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes
 
 
 def test_view(request):
@@ -66,3 +67,36 @@ class UserDetailsView(APIView):
             'username': user.username,
             'email': user.email
         })
+
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def user_settings(request):
+    user = request.user
+    
+    if request.method == 'GET':
+        return Response({
+            "username": user.username,
+            "email": user.email,
+            "location": user.location or "Not provided",
+            "user_type": user.user_type,
+        })
+    
+    elif request.method == 'PUT':
+        data = request.data
+        user.username = data.get('username', user.username)
+        user.email = data.get('email', user.email)
+        user.location = data.get('location', user.location)
+        
+        password = data.get('password')
+        if password:
+            user.set_password(password)  # Update password
+        
+        user.save()
+        
+        return Response({
+            "username": user.username,
+            "email": user.email,
+            "location": user.location or "Not provided",
+            "user_type": user.user_type,
+        }, status=status.HTTP_200_OK)
+    
