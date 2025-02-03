@@ -12,6 +12,7 @@ import CustomerDashboard from './components/userdash';
 import OwnerDashboard from './components/ownerdash';
 import AdminDashboard from './components/admindash';
 import PrivateRoute from './components/reuse/PrivateRoute';
+import Settings from './components/pages/settings';
 
 
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/customer-dashboard" element={<CustomerDashboard />} />
           <Route path="/owner-dashboard" element={<OwnerDashboard />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Routes>
     </Router>

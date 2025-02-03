@@ -9,7 +9,7 @@ function Sidebar() {
     <div className="sidebar">
       <ul>
         <li className='path'>
-          <Link to="/settings">
+          <Link to="/customer-dashboard">
             <FaTachometerAlt /> dashboard
           </Link>
         </li>
