@@ -1,41 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaCog, FaComments, FaTachometerAlt, FaChild, FaGamepad, FaFootballBall } from 'react-icons/fa';
+import { FaComments, FaTachometerAlt, FaChild, FaFootballBall } from 'react-icons/fa';
 import '../../styles/user-nav.css';
 import LogoutButton from './Logout';
 
-function Sidebar() {
+function Sidebar3() {
   return (
     <div className="sidebar">
       <ul>
         <li className='path'>
-          <Link to="/customer-dashboard">
+          <Link to="/settings">
             <FaTachometerAlt /> dashboard
           </Link>
         </li>
         <li className='path'>
           <Link to="/settings">
-          <FaFootballBall /> Playgrounds
+          <FaFootballBall /> User Management
           </Link>
         </li>
         <li className='path'>
           <Link to="/settings">
-            <FaChild /> Child play
-          </Link>
-        </li>
-        <li className='path'>
-          <Link to="/settings">
-            <FaGamepad /> Games
-          </Link>
-        </li>
-        <li className='path'>
-          <Link to="/settings">
-            <FaCog /> Settings
+            <FaChild /> Playground Management
           </Link>
         </li>
         <li className='path'>
           <Link to="/feedback">
-            <FaComments /> Feedback
+            <FaComments /> Feedback View
           </Link>
         </li>
         <li className='path'>
@@ -48,4 +38,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default Sidebar3;

@@ -13,4 +13,5 @@ urlpatterns = [
     path('api/logout/', LogoutView.as_view(), name='logout'),
     path('api/user-details/', UserDetailsView.as_view(), name='user-details'),
     path('api/settings/', user_settings, name="user-settings"),
+    path('api/weather/', views.get_user_weather, name='get_user_weather'),
 ]
