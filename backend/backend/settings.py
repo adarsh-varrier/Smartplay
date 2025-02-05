@@ -153,3 +153,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+OPENWEATHER_API_KEY = 'f3b13b4277f15c3c54e8584794450117'
+
+LOGIN_URL = '/accounts/login/' 

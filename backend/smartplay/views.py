@@ -14,6 +14,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
+from .utils.weather import get_weather_data
 
 
 def test_view(request):
@@ -51,6 +52,8 @@ class LoginView(APIView):
             return Response(response_data, status=status.HTTP_200_OK)
 
         return Response({"message": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+    
+
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
 
@@ -65,7 +68,6 @@ class UserDetailsView(APIView):
         user = request.user  # Get the current logged-in user
         return Response({
             'username': user.username,
-            'email': user.email
         })
 
 @api_view(['GET', 'PUT'])
@@ -100,3 +102,18 @@ def user_settings(request):
             "user_type": user.user_type,
         }, status=status.HTTP_200_OK)
     
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  # Ensure the user is authenticated
+def get_user_weather(request):
+    user = request.user
+    location = user.location  # Get location from the logged-in user
+
+    if location:
+        weather_data = get_weather_data(location)
+        
+        if weather_data:
+            return Response(weather_data)
+        else:
+            return Response({"error": "Could not fetch weather data."}, status=500)
+    else:
+        return Response({"error": "Location is not set for this user."}, status=400)
