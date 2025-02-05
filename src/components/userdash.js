@@ -3,6 +3,7 @@ import Sidebar from './reuse/user-side';
 import '../styles/user-dash.css';  
 import '../styles/head-common.css'; 
 import { Link } from 'react-router-dom'; 
+import WeatherData from './reuse/weather';
 
 function CustomerDashboard() {
   const [username, setUsername] = useState('');
@@ -38,6 +39,7 @@ function CustomerDashboard() {
       .catch(error => {
         console.error('Error fetching user data:', error);
       });
+
   }, []);
 
   return (
@@ -63,11 +65,13 @@ function CustomerDashboard() {
             </nav>
         </div>
         <div className='dashboard-container'>
-        
             <Sidebar/>
             <div className='dashboard-content'>
-            <h2>Customer Dashboard</h2>
-            <p>Welcome, {username ? username : 'Loading...'}!</p> {/* Display the username */}
+              <h2>Customer Dashboard</h2>
+              <p>Welcome, {username ? username : 'Loading...'}!</p> {/* Display the username */}
+                <div>
+                  <WeatherData/>
+                </div>
             </div>
         </div>
     </div>

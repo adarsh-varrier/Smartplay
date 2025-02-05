@@ -4,6 +4,7 @@ import Sidebar2 from './reuse/owner-side';
 import '../styles/user-dash.css'; 
 import '../styles/head-common.css'; 
 import { Link } from 'react-router-dom'; 
+import WeatherData from './reuse/weather';
 
 function OwnerDashboard() {
 
@@ -70,6 +71,9 @@ function OwnerDashboard() {
           <h1>Owner Dash</h1>
             <p>Welcome, {username ? username : 'Loading...'}!</p> {/* Display the username */}
             {/* Owner-specific content */}
+            <div>
+              <WeatherData/>
+            </div>
           </div>
         </div>
     </div>
