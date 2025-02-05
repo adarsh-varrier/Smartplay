@@ -14,7 +14,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
-from .utils.weather import get_weather_data
+from .utils.weather import get_weather_data, get_future_weather_data
 
 
 def test_view(request):
@@ -110,9 +110,13 @@ def get_user_weather(request):
 
     if location:
         weather_data = get_weather_data(location)
-        
-        if weather_data:
-            return Response(weather_data)
+        if weather_data and 'sys' in weather_data and 'country' in weather_data['sys']:
+            future_weather_data = get_future_weather_data(location)
+            return Response({
+                "current_weather": weather_data,
+                "next_48_hour_forecast": future_weather_data,
+                "message": "Weather data fetched successfully"
+            })
         else:
             return Response({"error": "Could not fetch weather data."}, status=500)
     else:
